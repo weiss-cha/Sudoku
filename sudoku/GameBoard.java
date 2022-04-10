@@ -82,13 +82,22 @@ public class GameBoard extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Get a reference of the JTextField that triggers this action event
+        public void keyTyped(KeyEvent e) {
+            // Get a reference of the JTextField that triggers this key event
             Cell sourceCell = (Cell)e.getSource();
+            if (sourceCell.getText().length() > 0) { //dodge first time
+            	sourceCell.setText("");
+            } else if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
+            	sourceCell.setText(""); //set to empty, back space has a value
+            	sourceCell.status = CellStatus.WRONG_GUESS;
+            	sourceCell.paint(); //repaint the colour to red when the bg is alr green
+            	return;
+            }
+            System.out.println(e.getKeyChar());
             
             // Retrieve the int entered
-            int numberIn = Integer.parseInt(sourceCell.getText());
-            // For debugging
-            System.out.println("You entered " + numberIn);
-  
+            int numberIn = Integer.parseInt(Character.toString(e.getKeyChar()));
+            
             /*
             * [TODO 5]
             * Check the numberIn against sourceCell.number.
@@ -112,5 +121,7 @@ public class GameBoard extends JPanel {
                 JOptionPane.showMessageDialog(null, "You won the game!", "Congratulations", 1);
             }
         }
+        @Override public void keyPressed(KeyEvent evt) { }
+        @Override public void keyReleased(KeyEvent evt) { }
     }
 }
