@@ -37,12 +37,15 @@ public class Puzzle {
             {2, 8, 7, 4, 1, 9, 6, 3, 5},
             {3, 4, 5, 2, 8, 6, 1, 7, 9}};
 
+        // Random int between 1-8
         int random = new Random().nextInt(9 - 1) + 1;
 
-        // Copy from hardcoded number
+        // Copy from hardcoded number + add random int
         for (int row = 0; row < GameBoard.GRID_SIZE; ++row) {
             for (int col = 0; col < GameBoard.GRID_SIZE; ++col) {
                 numbers[row][col] = hardcodedNumbers[row][col] + random;
+
+                // Return to 1 after 9 (eg. 10 -> 1, 13 -> 4)
                 if (numbers[row][col] > 9) {
                     numbers[row][col] = numbers[row][col] - 9;
                 }

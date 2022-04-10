@@ -6,7 +6,8 @@ import javax.swing.*;
 public class MenuBar extends JMenuBar {
 
     GameBoard board = new GameBoard();
-    
+
+    // Constructor    
     public MenuBar(GameBoard board) {
         super();
 
@@ -18,26 +19,33 @@ public class MenuBar extends JMenuBar {
         JMenuItem resetGame = new JMenuItem("Reset Game");
         JMenuItem exitGame = new JMenuItem("Exit");
 
+        // Add MenuItem to Menu
         file.add(newGame);
         file.add(resetGame);
         file.add(exitGame);
 
+        // Add Menu to MenuBar
         this.add(file);
         this.add(options);
         this.add(help);
 
+        // Add Listener to MenuItem
+
+        // New Game
         newGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 board.init();
             }
         });
 
+        //Reset Game
         resetGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 board.reset();
             }
         });
 
+        // Exit
         exitGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
