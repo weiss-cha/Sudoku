@@ -16,8 +16,6 @@ public class GameBoard extends JPanel {
 
     // The game board composes of 9x9 "Customized" JTextFields,
     private Cell[][] cells = new Cell[GRID_SIZE][GRID_SIZE];
-    // It also contains a Puzzle
-    private Puzzle puzzle = new Puzzle();
 
     // Constructor
     public GameBoard() {
@@ -54,12 +52,12 @@ public class GameBoard extends JPanel {
     */
     public void init() {
         // Get a new puzzle
-        puzzle.newPuzzle(2);
+        Puzzle.getInstance().newPuzzle(2);
 
         // Based on the puzzle, initialize all the cells.
         for (int row = 0; row < GRID_SIZE; ++row) {
             for (int col = 0; col < GRID_SIZE; ++col) {
-                cells[row][col].init(puzzle.numbers[row][col], puzzle.isShown[row][col]);
+                cells[row][col].init(Puzzle.getInstance().numbers[row][col], Puzzle.getInstance().isShown[row][col]);
             }
         }
     }

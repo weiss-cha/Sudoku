@@ -9,9 +9,16 @@ public class Puzzle {
     // The masks - to show or not
     boolean[][] isShown = new boolean[GameBoard.GRID_SIZE][GameBoard.GRID_SIZE];
 
-    // Constructor
-    public Puzzle() {
-        super();
+    // Singleton
+    private static Puzzle puzzle = new Puzzle();
+
+    private Puzzle() {
+
+    }
+
+    public static Puzzle getInstance()
+    {
+        return puzzle;
     }
 
     // Generate a new puzzle given the number of cells to be guessed
@@ -56,6 +63,4 @@ public class Puzzle {
             }
         }
     }
-
-    //(For advanced students) use singleton design pattern for this class
 }
