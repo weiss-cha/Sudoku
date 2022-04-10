@@ -8,7 +8,7 @@ import javax.swing.*;
 public class SudokuMain extends JFrame {
     // private variables
     GameBoard board = new GameBoard();
-    JButton btnNewGame = new JButton("New Game");
+    MenuBar menuBar = new MenuBar(board);
 
     // Constructor
     public SudokuMain() {
@@ -17,8 +17,7 @@ public class SudokuMain extends JFrame {
 
         cp.add(board, BorderLayout.CENTER);
 
-      // Add a button to the south to re-start the game
-      // ......
+        cp.add(menuBar, BorderLayout.NORTH);
 
         board.init();
 

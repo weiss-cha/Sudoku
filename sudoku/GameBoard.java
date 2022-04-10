@@ -62,6 +62,15 @@ public class GameBoard extends JPanel {
         }
     }
 
+    public void reset() {
+        // Based on the puzzle, initialize all the cells.
+        for (int row = 0; row < GRID_SIZE; ++row) {
+            for (int col = 0; col < GRID_SIZE; ++col) {
+                cells[row][col].init(Puzzle.getInstance().numbers[row][col], Puzzle.getInstance().isShown[row][col]);
+            }
+        }
+    }
+
     /**
     * Return true if the puzzle is solved
     * i.e., none of the cell have status of NO_GUESS or WRONG_GUESS
