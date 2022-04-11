@@ -5,8 +5,6 @@ import javax.swing.*;
 
 public class MenuBar extends JMenuBar {
 
-    GameBoard board = new GameBoard();
-
     // Constructor    
     public MenuBar(GameBoard board) {
         super();
@@ -34,21 +32,39 @@ public class MenuBar extends JMenuBar {
         // New Game
         newGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                board.init();
+                // Choose Difficulty
+                DifficultyDialog diff = new DifficultyDialog(board);
+
+                // Display dialog to the center of GameBoard
+                diff.setLocationRelativeTo(board);
             }
         });
 
-        //Reset Game
+        // Reset Game
         resetGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                board.reset();
+
+                // Display OptionPane to confirm action
+                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to reset the game?", 
+                "Reset Game", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+                if(result == JOptionPane.YES_OPTION) {
+                    board.reset();
+                }
             }
         });
 
         // Exit
         exitGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+
+                // Display OptionPane to confirm action
+                int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the game?", 
+                "Exit Game", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+                if(result == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
             }
         });
     }

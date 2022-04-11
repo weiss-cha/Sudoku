@@ -17,6 +17,7 @@ public class SudokuMain extends JFrame {
 
 	// Constructor
 	public SudokuMain() {
+
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
 
@@ -24,12 +25,15 @@ public class SudokuMain extends JFrame {
 
         cp.add(menuBar, BorderLayout.NORTH);
 
-		board.init();
+		board.init(2);
 
         pack();     // Pack the UI components, instead of setSize()
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Handle window closing
         setTitle("Sudoku");
         setVisible(true);
+
+		// Display JFrame to the center of the screen
+		setLocationRelativeTo(null);
 
         // Background Music
 		try {
