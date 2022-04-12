@@ -83,8 +83,10 @@ public class GameBoard extends JPanel {
         public void keyTyped(KeyEvent e) {
             // Get a reference of the JTextField that triggers this key event
             Cell sourceCell = (Cell)e.getSource();
-            
-            if (sourceCell.getText().length() > 0) { //dodge first time input
+            // Input validation, reject non-numbers
+            if ((e.getKeyChar() < '0' || e.getKeyChar() > '9') && e.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
+            	e.consume();
+            } else if (sourceCell.getText().length() > 0) { //dodge first time input
             	sourceCell.setText("");
             } else if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
             	sourceCell.setText(""); //set to empty, back space has a value
@@ -92,10 +94,10 @@ public class GameBoard extends JPanel {
             	sourceCell.paint(); //repaint the colour to red when the bg is alr green
             	return;
             }
-            System.out.println(e.getKeyChar());
+            //System.out.println(e.getKeyChar());
             
             // Retrieve the int entered
-            int numberIn = Integer.parseInt(Character.toString(e.getKeyChar()));
+            //int numberIn = Integer.parseInt(Character.toString(e.getKeyChar()));
             
             /*
             * [TODO 5]
@@ -103,26 +105,39 @@ public class GameBoard extends JPanel {
             * Update the cell status sourceCell.status,
             * and re-paint the cell via sourceCell.paint().
             */
-            if (numberIn == sourceCell.number) {
-            	Sounds.CORRECT.play();
-                sourceCell.status = CellStatus.CORRECT_GUESS;
-            } 
             
-            else {
-            	Sounds.WRONG.play();
-                sourceCell.status = CellStatus.WRONG_GUESS;
-            }
-            sourceCell.paint();
   
             /*
             * [TODO 6][Later] Check if the player has solved the puzzle after this move,
             *   by call isSolved(). Put up a congratulation JOptionPane, if so.
             */
-            if (isSolved()) { //Check for puzzle solve
-                JOptionPane.showMessageDialog(null, "You won the game!", "Congratulations", 1);
-            }
+            
         }
-        @Override public void keyPressed(KeyEvent evt) { }
-        @Override public void keyReleased(KeyEvent evt) { }
-    }
+        @Override public void keyPressed(KeyEvent e) { }
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// Get a reference of the JTextField again
+			Cell sourceCell = (Cell) e.getSource();
+			// Input validation
+			if ((e.getKeyChar() < '0' || e.getKeyChar() > '9') && e.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
+				// Do nothing, already handled on keyTyped
+			} else {
+				// Retrieve the int entered
+				int numberIn = Integer.parseInt(Character.toString(e.getKeyChar()));
+				// Check whether input is wrong or correct
+				if (numberIn == sourceCell.number) {
+					Sounds.CORRECT.play();
+					sourceCell.status = CellStatus.CORRECT_GUESS;
+				} else {
+					Sounds.WRONG.play();
+					sourceCell.status = CellStatus.WRONG_GUESS;
+				}
+				sourceCell.paint();
+
+				if (isSolved()) { // Check for puzzle solve
+					JOptionPane.showMessageDialog(null, "You won the game!", "Congratulations", 1);
+				}
+			}
+		}
+	}
 }
