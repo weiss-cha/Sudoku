@@ -49,9 +49,9 @@ public class GameBoard extends JPanel {
     *   of all the cells from puzzle[][] and isRevealed[][].
     * Call to start a new game.
     */
-    public void init() {
+    public void init(int numToGuess) {
         // Get a new puzzle
-        Puzzle.getInstance().newPuzzle(2);
+        Puzzle.getInstance().newPuzzle(numToGuess);
 
         // Based on the puzzle, initialize all the cells.
         for (int row = 0; row < GRID_SIZE; ++row) {
@@ -60,6 +60,15 @@ public class GameBoard extends JPanel {
             }
         }
         
+    }
+
+    // Reset current puzzle (ie. clear all input)
+    public void reset() {
+        for (int row = 0; row < GRID_SIZE; ++row) {
+            for (int col = 0; col < GRID_SIZE; ++col) {
+                cells[row][col].init(Puzzle.getInstance().numbers[row][col], Puzzle.getInstance().isShown[row][col]);
+            }
+        }
     }
 
     /**

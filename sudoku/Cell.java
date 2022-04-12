@@ -8,8 +8,8 @@ import javax.swing.JTextField;
  */
 public class Cell extends JTextField {
     // Name-constants for JTextField's colors and fonts
-    public static final Color BG_SHOWN = new Color(240, 240, 240); // RGB
-    public static final Color FG_SHOWN = Color.BLACK;
+    public static final Color BG_SHOWN = new Color(240, 240, 240); // cell colour
+    public static final Color FG_SHOWN = Color.BLACK; // font colour
     public static final Color FG_NOT_SHOWN = Color.GRAY;
     public static final Color BG_NO_GUESS = Color.YELLOW;
     public static final Color BG_CORRECT_GUESS = new Color(0, 216, 0);  // RGB

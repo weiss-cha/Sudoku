@@ -8,21 +8,21 @@ import javax.swing.*;
  * The main Sudoku program
  */
 public class SudokuMain extends JFrame {
-	// private variables
-	GameBoard board = new GameBoard();
-	JButton btnNewGame = new JButton("New Game");
+    // private variables
+    GameBoard board = new GameBoard();
+    MenuBar menuBar = new MenuBar(board);
 
 	// Constructor
 	public SudokuMain() {
+
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
 
 		cp.add(board, BorderLayout.CENTER);
 
-		// Add a button to the south to re-start the game
-		// ......
+    cp.add(menuBar, BorderLayout.NORTH);
 
-		board.init();
+		board.init(2);
 		Sounds.init(); //Pre-load all of the sound files
 		
 		pack(); // Pack the UI components, instead of setSize()
@@ -30,7 +30,12 @@ public class SudokuMain extends JFrame {
 		setTitle("Sudoku");
 		setVisible(true);
 		Sounds.BGM1.play(); //Background Music
+    
+    // Display JFrame to the center of the screen
+		setLocationRelativeTo(null);
 	}
+  
+
 
 	/** The entry main() entry method */
 	public static void main(String[] args) {
