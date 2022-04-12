@@ -2,6 +2,9 @@ package sudoku;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.io.IOException;
+import java.net.URL;
+import javax.sound.sampled.*;
 
 public class GameBoard extends JPanel {
     // Name-constants for the game board properties
@@ -59,6 +62,7 @@ public class GameBoard extends JPanel {
                 cells[row][col].init(Puzzle.getInstance().numbers[row][col], Puzzle.getInstance().isShown[row][col]);
             }
         }
+        
     }
 
     /**
@@ -82,7 +86,8 @@ public class GameBoard extends JPanel {
         public void keyTyped(KeyEvent e) {
             // Get a reference of the JTextField that triggers this key event
             Cell sourceCell = (Cell)e.getSource();
-            if (sourceCell.getText().length() > 0) { //dodge first time
+            
+            if (sourceCell.getText().length() > 0) { //dodge first time input
             	sourceCell.setText("");
             } else if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
             	sourceCell.setText(""); //set to empty, back space has a value
@@ -102,10 +107,12 @@ public class GameBoard extends JPanel {
             * and re-paint the cell via sourceCell.paint().
             */
             if (numberIn == sourceCell.number) {
+            	Sounds.CORRECT.play();
                 sourceCell.status = CellStatus.CORRECT_GUESS;
             } 
             
             else {
+            	Sounds.WRONG.play();
                 sourceCell.status = CellStatus.WRONG_GUESS;
             }
             sourceCell.paint();
@@ -114,7 +121,7 @@ public class GameBoard extends JPanel {
             * [TODO 6][Later] Check if the player has solved the puzzle after this move,
             *   by call isSolved(). Put up a congratulation JOptionPane, if so.
             */
-            if (isSolved()) {
+            if (isSolved()) { //Check for puzzle solve
                 JOptionPane.showMessageDialog(null, "You won the game!", "Congratulations", 1);
             }
         }
