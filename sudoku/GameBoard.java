@@ -2,9 +2,6 @@ package sudoku;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.io.IOException;
-import java.net.URL;
-import javax.sound.sampled.*;
 
 public class GameBoard extends JPanel {
     // Name-constants for the game board properties
