@@ -13,10 +13,10 @@ public class SudokuMain extends JFrame {
     MenuBar menuBar = new MenuBar(board);
     
     // Sounds instances
-    public static final Sounds backgroundMusic = new Sounds("Guitar-Gentle.wav");
-    public static final Sounds correctEffect = new Sounds("correct-sound.wav");
-    public static final Sounds wrongEffect = new Sounds("wrong-sound.wav");
-    
+    public static Sounds backgroundMusic = new Sounds("Guitar-Gentle.wav");
+    public static Sounds correctEffect = new Sounds("correct-sound.wav");
+    public static Sounds wrongEffect = new Sounds("wrong-sound.wav");
+    public static String currentBGM = "bgm1";
 	// Constructor
 	public SudokuMain() {
 

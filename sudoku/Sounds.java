@@ -31,6 +31,29 @@ public class Sounds {
 		}
 	}
 	
+	public void switchSong(String soundFileName) {
+		stop();
+		try {
+			// Open an audio input stream.
+			URL url = this.getClass().getClassLoader().getResource(soundFileName);
+			// Set up an audio input stream piped from the sound file.
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+			// Get a clip resource.
+			clip = AudioSystem.getClip();
+			// Open audio clip and load samples from the audio input stream.
+			clip.open(audioInputStream);
+			fc = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+		}
+		
+		loop();
+	}
+	
 	public void play() {
 		if(clip.isRunning()) {
 			clip.stop();
