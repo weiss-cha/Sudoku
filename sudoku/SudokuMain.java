@@ -29,7 +29,7 @@ public class SudokuMain extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Handle window closing
 		setTitle("Sudoku");
 		setVisible(true);
-		Sounds.BGM1.play(); //Background Music
+		Sounds.BGM1.loop(); //Background Music
     
     // Display JFrame to the center of the screen
 		setLocationRelativeTo(null);
