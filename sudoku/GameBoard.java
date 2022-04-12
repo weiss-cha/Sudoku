@@ -86,7 +86,7 @@ public class GameBoard extends JPanel {
         return true;
     }
 
-    // [TODO 2] Define a Listener Inner Class
+    // Define Listener Inner Class
     private class MyKeyListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
@@ -103,25 +103,8 @@ public class GameBoard extends JPanel {
             	sourceCell.paint(); //repaint the colour to red when the bg is alr green
             	return;
             }
-            //System.out.println(e.getKeyChar());
-            
-            // Retrieve the int entered
-            //int numberIn = Integer.parseInt(Character.toString(e.getKeyChar()));
-            
-            /*
-            * [TODO 5]
-            * Check the numberIn against sourceCell.number.
-            * Update the cell status sourceCell.status,
-            * and re-paint the cell via sourceCell.paint().
-            */
-            
-  
-            /*
-            * [TODO 6][Later] Check if the player has solved the puzzle after this move,
-            *   by call isSolved(). Put up a congratulation JOptionPane, if so.
-            */
-            
         }
+        
         @Override public void keyPressed(KeyEvent e) { }
 		@Override
 		public void keyReleased(KeyEvent e) {
@@ -135,10 +118,10 @@ public class GameBoard extends JPanel {
 				int numberIn = Integer.parseInt(Character.toString(e.getKeyChar()));
 				// Check whether input is wrong or correct
 				if (numberIn == sourceCell.number) {
-					Sounds.CORRECT.play();
+					SudokuMain.correctEffect.play();
 					sourceCell.status = CellStatus.CORRECT_GUESS;
 				} else {
-					Sounds.WRONG.play();
+					SudokuMain.wrongEffect.play();
 					sourceCell.status = CellStatus.WRONG_GUESS;
 				}
 				sourceCell.paint();
