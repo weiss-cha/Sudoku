@@ -31,13 +31,12 @@ public class GameBoard extends JPanel {
 
         // [TODO 3] Allocate a common listener as the ActionEvent listener for all the
         //  Cells (JTextFields)
-        CellInputListener listener = new CellInputListener();
 
         // [TODO 4] Every editable cell adds this common listener
         for (int row = 0; row < GRID_SIZE; ++row) {
             for (int col = 0; col < GRID_SIZE; ++col) {
                 if (cells[row][col].isEditable()) {
-                    cells[row][col].addActionListener(listener);   // For all editable rows and cols
+                    cells[row][col].addKeyListener(new MyKeyListener());   // For all editable rows and cols
                 }
             }
         }
@@ -60,6 +59,7 @@ public class GameBoard extends JPanel {
                 cells[row][col].init(Puzzle.getInstance().numbers[row][col], Puzzle.getInstance().isShown[row][col]);
             }
         }
+        
     }
 
     // Reset current puzzle (ie. clear all input)
@@ -87,39 +87,66 @@ public class GameBoard extends JPanel {
     }
 
     // [TODO 2] Define a Listener Inner Class
-    private class CellInputListener implements ActionListener {
+    private class MyKeyListener implements KeyListener {
         @Override
-        public void actionPerformed(ActionEvent e) {
-            // Get a reference of the JTextField that triggers this action event
+        public void keyTyped(KeyEvent e) {
+            // Get a reference of the JTextField that triggers this key event
             Cell sourceCell = (Cell)e.getSource();
+            // Input validation, reject non-numbers
+            if ((e.getKeyChar() < '0' || e.getKeyChar() > '9') && e.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
+            	e.consume();
+            } else if (sourceCell.getText().length() > 0) { //dodge first time input
+            	sourceCell.setText("");
+            } else if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
+            	sourceCell.setText(""); //set to empty, back space has a value
+            	sourceCell.status = CellStatus.WRONG_GUESS;
+            	sourceCell.paint(); //repaint the colour to red when the bg is alr green
+            	return;
+            }
+            //System.out.println(e.getKeyChar());
             
             // Retrieve the int entered
-            int numberIn = Integer.parseInt(sourceCell.getText());
-            // For debugging
-            System.out.println("You entered " + numberIn);
-  
+            //int numberIn = Integer.parseInt(Character.toString(e.getKeyChar()));
+            
             /*
             * [TODO 5]
             * Check the numberIn against sourceCell.number.
             * Update the cell status sourceCell.status,
             * and re-paint the cell via sourceCell.paint().
             */
-            if (numberIn == sourceCell.number) {
-                sourceCell.status = CellStatus.CORRECT_GUESS;
-            } 
             
-            else {
-                sourceCell.status = CellStatus.WRONG_GUESS;
-            }
-            sourceCell.paint();
   
             /*
             * [TODO 6][Later] Check if the player has solved the puzzle after this move,
             *   by call isSolved(). Put up a congratulation JOptionPane, if so.
             */
-            if (isSolved()) {
-                JOptionPane.showMessageDialog(null, "You won the game!", "Congratulations", 1);
-            }
+            
         }
-    }
+        @Override public void keyPressed(KeyEvent e) { }
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// Get a reference of the JTextField again
+			Cell sourceCell = (Cell) e.getSource();
+			// Input validation
+			if ((e.getKeyChar() < '0' || e.getKeyChar() > '9') && e.getKeyChar() != KeyEvent.VK_BACK_SPACE) {
+				// Do nothing, already handled on keyTyped
+			} else {
+				// Retrieve the int entered
+				int numberIn = Integer.parseInt(Character.toString(e.getKeyChar()));
+				// Check whether input is wrong or correct
+				if (numberIn == sourceCell.number) {
+					Sounds.CORRECT.play();
+					sourceCell.status = CellStatus.CORRECT_GUESS;
+				} else {
+					Sounds.WRONG.play();
+					sourceCell.status = CellStatus.WRONG_GUESS;
+				}
+				sourceCell.paint();
+
+				if (isSolved()) { // Check for puzzle solve
+					JOptionPane.showMessageDialog(null, "You won the game!", "Congratulations", 1);
+				}
+			}
+		}
+	}
 }
