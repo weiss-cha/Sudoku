@@ -157,6 +157,7 @@ public class MenuBar extends JMenuBar {
         	public void actionPerformed(ActionEvent e) {
         		if(SudokuMain.currentBGM != "bgm1") {
         			SudokuMain.backgroundMusic.switchSong("Guitar-Gentle.wav");
+        			SudokuMain.backgroundMusic.setVolume(sldrVolCtrl.getValue());
         			SudokuMain.currentBGM = "bgm1";
         		}
         	}
@@ -166,6 +167,7 @@ public class MenuBar extends JMenuBar {
         	public void actionPerformed(ActionEvent e) {
         		if(SudokuMain.currentBGM != "bgm2") {
         			SudokuMain.backgroundMusic.switchSong("Neverland.wav");
+        			SudokuMain.backgroundMusic.setVolume(sldrVolCtrl.getValue());
         			SudokuMain.currentBGM = "bgm2";
         		}
         	}
@@ -175,6 +177,7 @@ public class MenuBar extends JMenuBar {
         	public void actionPerformed(ActionEvent e) {
         		if(SudokuMain.currentBGM != "bgm3") {
         			SudokuMain.backgroundMusic.switchSong("The-Beginning-w-Caturday.wav");
+        			SudokuMain.backgroundMusic.setVolume(sldrVolCtrl.getValue());
         			SudokuMain.currentBGM = "bgm3";
         		}
         	}
