@@ -35,13 +35,11 @@ public class SudokuMain extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Handle window closing
 		setTitle("Sudoku");
 		setVisible(true);
-		//SoundsEnum.BGM1.loop(); //Background Music
+
     // Display JFrame to the center of the screen
 		setLocationRelativeTo(null);
 	}
   
-
-
 	/** The entry main() entry method */
 	public static void main(String[] args) {
 		// [TODO 1] Check Swing program template on how to run the constructor

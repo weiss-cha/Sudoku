@@ -2,6 +2,7 @@ package sudoku;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.time.*;
 
 public class GameBoard extends JPanel {
     // Name-constants for the game board properties
@@ -17,9 +18,38 @@ public class GameBoard extends JPanel {
     // The game board composes of 9x9 "Customized" JTextFields,
     private Cell[][] cells = new Cell[GRID_SIZE][GRID_SIZE];
 
+    // Countdown Timer
+    JLabel time = new JLabel();
+
+    LocalDateTime startTime = LocalDateTime.now(); // Time when game starts
+    Duration duration = Duration.ofMinutes(10); // Countdown Duration
+
+    // Timer is fired every 500ms
+    Timer timer =new Timer(500, new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+
+            LocalDateTime now = LocalDateTime.now(); // Time when Timer is fired
+            Duration timeLeft = duration.minus(Duration.between(startTime, now)); // Time Left
+
+            // Timer stops at zero
+            if (timeLeft.isZero() || timeLeft.isNegative()) {
+                timeLeft = Duration.ZERO;
+            }
+
+            // Format time
+            time.setText(format(timeLeft));
+
+            // Time's Up
+            if (timeLeft == Duration.ZERO) {
+                JOptionPane.showMessageDialog(null, "GAME OVER", "Time's Up", 2);
+                timer.stop();
+            }
+        }
+    });
+
     // Constructor
     public GameBoard() {
-        super.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));  // JPanel
+        super.setLayout(new GridLayout(GRID_SIZE + 1, GRID_SIZE));  // JPanel
 
         // Allocate the 2D array of Cell, and added into JPanel.
         for (int row = 0; row < GRID_SIZE; ++row) {
@@ -29,9 +59,6 @@ public class GameBoard extends JPanel {
             }
         }
 
-        // [TODO 3] Allocate a common listener as the ActionEvent listener for all the
-        //  Cells (JTextFields)
-
         // [TODO 4] Every editable cell adds this common listener
         for (int row = 0; row < GRID_SIZE; ++row) {
             for (int col = 0; col < GRID_SIZE; ++col) {
@@ -40,6 +67,10 @@ public class GameBoard extends JPanel {
                 }
             }
         }
+
+        // Add Timer
+        time.setHorizontalAlignment(JLabel.CENTER);  
+        super.add(time);
 
         super.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
     }
@@ -60,6 +91,9 @@ public class GameBoard extends JPanel {
             }
         }
         
+        // Reset Timer
+        startTime = LocalDateTime.now();
+        timer.start();
     }
 
     // Reset current puzzle (ie. clear all input)
@@ -69,6 +103,10 @@ public class GameBoard extends JPanel {
                 cells[row][col].init(Puzzle.getInstance().numbers[row][col], Puzzle.getInstance().isShown[row][col]);
             }
         }
+
+        // Reset Timer
+        startTime = LocalDateTime.now();
+        timer.start();
     }
 
     /**
@@ -85,7 +123,9 @@ public class GameBoard extends JPanel {
         }
         return true;
     }
-
+  
+    // [TODO 3] Allocate a common listener as the ActionEvent listener for all the
+    //  Cells (JTextFields)
     // Define Listener Inner Class
     private class MyKeyListener implements KeyListener {
         @Override
@@ -116,7 +156,13 @@ public class GameBoard extends JPanel {
 			} else {
 				// Retrieve the int entered
 				int numberIn = Integer.parseInt(Character.toString(e.getKeyChar()));
-				// Check whether input is wrong or correct
+
+                /*
+                * [TODO 5]
+                * Check the numberIn against sourceCell.number.
+                * Update the cell status sourceCell.status,
+                * and re-paint the cell via sourceCell.paint().
+                */
 				if (numberIn == sourceCell.number) {
 					SudokuMain.correctEffect.play();
 					sourceCell.status = CellStatus.CORRECT_GUESS;
@@ -125,11 +171,22 @@ public class GameBoard extends JPanel {
 					sourceCell.status = CellStatus.WRONG_GUESS;
 				}
 				sourceCell.paint();
-
+               
+                /*
+                * [TODO 6][Later] Check if the player has solved the puzzle after this move,
+                *   by call isSolved(). Put up a congratulation JOptionPane, if so.
+                */
 				if (isSolved()) { // Check for puzzle solve
 					JOptionPane.showMessageDialog(null, "You won the game!", "Congratulations", 1);
 				}
 			}
 		}
 	}
+
+    // Format Time
+    protected String format(Duration duration) {
+        long mins = duration.toMinutes();
+        long seconds = duration.minusMinutes(mins).toMillis() / 1000;
+        return String.format("%dm %ds", mins, seconds);
+    }
 }
