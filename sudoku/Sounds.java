@@ -90,6 +90,7 @@ public class Sounds {
 			currVolume = 6.0f;
 		} else if (volume < -80.0f) {
 			currVolume = -80.0f; //lowest possible for Float Control
+			isMute = true;
 		} else {
 			currVolume = volume;
 		}
