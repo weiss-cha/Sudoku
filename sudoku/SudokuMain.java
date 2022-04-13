@@ -20,7 +20,7 @@ public class SudokuMain extends JFrame {
 
 		cp.add(board, BorderLayout.CENTER);
 
-    cp.add(menuBar, BorderLayout.NORTH);
+    	cp.add(menuBar, BorderLayout.NORTH);
 
 		board.init(2);
 		Sounds.init(); //Pre-load all of the sound files
@@ -29,14 +29,12 @@ public class SudokuMain extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Handle window closing
 		setTitle("Sudoku");
 		setVisible(true);
-		Sounds.BGM1.play(); //Background Music
+		Sounds.BGM1.loop(); //Background Music
     
     // Display JFrame to the center of the screen
 		setLocationRelativeTo(null);
 	}
   
-
-
 	/** The entry main() entry method */
 	public static void main(String[] args) {
 		// [TODO 1] Check Swing program template on how to run the constructor
