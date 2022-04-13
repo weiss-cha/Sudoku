@@ -11,7 +11,12 @@ public class SudokuMain extends JFrame {
     // private variables
     GameBoard board = new GameBoard();
     MenuBar menuBar = new MenuBar(board);
-
+    
+    // Sounds instances
+    public static Sounds backgroundMusic = new Sounds("Guitar-Gentle.wav");
+    public static Sounds correctEffect = new Sounds("correct-sound.wav");
+    public static Sounds wrongEffect = new Sounds("wrong-sound.wav");
+    public static String currentBGM = "bgm1";
 	// Constructor
 	public SudokuMain() {
 
@@ -20,17 +25,17 @@ public class SudokuMain extends JFrame {
 
 		cp.add(board, BorderLayout.CENTER);
 
-    	cp.add(menuBar, BorderLayout.NORTH);
+		cp.add(menuBar, BorderLayout.NORTH);
 
 		board.init(2);
-		Sounds.init(); //Pre-load all of the sound files
+		backgroundMusic.loop();
+		//SoundsEnum.init(); //Pre-load all of the sound files
 		
 		pack(); // Pack the UI components, instead of setSize()
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Handle window closing
 		setTitle("Sudoku");
 		setVisible(true);
-		Sounds.BGM1.loop(); //Background Music
-    
+
     // Display JFrame to the center of the screen
 		setLocationRelativeTo(null);
 	}

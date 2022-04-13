@@ -59,9 +59,6 @@ public class GameBoard extends JPanel {
             }
         }
 
-        // [TODO 3] Allocate a common listener as the ActionEvent listener for all the
-        //  Cells (JTextFields)
-
         // [TODO 4] Every editable cell adds this common listener
         for (int row = 0; row < GRID_SIZE; ++row) {
             for (int col = 0; col < GRID_SIZE; ++col) {
@@ -126,8 +123,10 @@ public class GameBoard extends JPanel {
         }
         return true;
     }
-
-    // [TODO 2] Define a Listener Inner Class
+  
+    // [TODO 3] Allocate a common listener as the ActionEvent listener for all the
+    //  Cells (JTextFields)
+    // Define Listener Inner Class
     private class MyKeyListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
@@ -144,8 +143,8 @@ public class GameBoard extends JPanel {
             	sourceCell.paint(); //repaint the colour to red when the bg is alr green
             	return;
             }
-            
         }
+        
         @Override public void keyPressed(KeyEvent e) { }
 		@Override
 		public void keyReleased(KeyEvent e) {
@@ -165,10 +164,10 @@ public class GameBoard extends JPanel {
                 * and re-paint the cell via sourceCell.paint().
                 */
 				if (numberIn == sourceCell.number) {
-					Sounds.CORRECT.play();
+					SudokuMain.correctEffect.play();
 					sourceCell.status = CellStatus.CORRECT_GUESS;
 				} else {
-					Sounds.WRONG.play();
+					SudokuMain.wrongEffect.play();
 					sourceCell.status = CellStatus.WRONG_GUESS;
 				}
 				sourceCell.paint();
