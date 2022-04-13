@@ -1,5 +1,4 @@
 package sudoku;
-
 import java.io.*;
 import java.net.URL;
 import javax.sound.sampled.*;
@@ -88,10 +87,13 @@ public class Sounds {
 	public void setVolume(float volume) {
 		if (volume > 6.0f) {
 			currVolume = 6.0f;
+			isMute = false;
 		} else if (volume < -80.0f) {
 			currVolume = -80.0f; //lowest possible for Float Control
+			isMute = true;
 		} else {
 			currVolume = volume;
+			isMute = false;
 		}
 		fc.setValue(currVolume);
 	}

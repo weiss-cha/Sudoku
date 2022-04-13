@@ -1,5 +1,4 @@
 package sudoku;
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -71,7 +70,6 @@ public class MenuBar extends JMenuBar {
         bgm1.setMnemonic(KeyEvent.VK_M);
         bgm2.setMnemonic(KeyEvent.VK_U);
         bgm3.setMnemonic(KeyEvent.VK_S);
-
 
         // Set Accelerator (i.e. Ctrl)
         newGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
