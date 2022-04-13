@@ -1,6 +1,8 @@
 package sudoku;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent; // For JSlider
+import javax.swing.event.ChangeListener; // For JSlider
 
 public class MenuBar extends JMenuBar {
 
@@ -20,7 +22,7 @@ public class MenuBar extends JMenuBar {
         JMenuItem volumeMute = new JMenuItem("Mute/Unmute");
         JMenuItem volumeLow = new JMenuItem("Low");
         JMenuItem volumeMedium = new JMenuItem("Medium");
-        JMenuItem volumeHigh = new JMenuItem("High");
+        JMenuItem volumeMax = new JMenuItem("High");
         
         JMenuItem bgm1 = new JMenuItem("Music 1");
         JMenuItem bgm2 = new JMenuItem("Music 2");
@@ -35,10 +37,10 @@ public class MenuBar extends JMenuBar {
         volumeMenu.add(volumeMute); 
         volumeMenu.add(volumeLow); 
         volumeMenu.add(volumeMedium); 
-        volumeMenu.add(volumeHigh);
-
+        volumeMenu.add(volumeMax);
         // Add Volume into optionsMenu
         optionsMenu.add(volumeMenu);
+
         
         // Add change music submenus
         bgmMenu.add(bgm1);
@@ -126,11 +128,31 @@ public class MenuBar extends JMenuBar {
         });
         
         // Volume, adjust volume
+        JSlider sldrVolCtrl; // Volume control using JSlider
+    	sldrVolCtrl = new JSlider(-40, 6); //(min, max)
+        volumeMenu.add(sldrVolCtrl); // Add the slider into Volume menu
+        sldrVolCtrl.addChangeListener(new ChangeListener() {
+        	@Override
+        	public void stateChanged(ChangeEvent e) {
+        		if(sldrVolCtrl.getValue() == -40) {
+        			SudokuMain.backgroundMusic.setVolume((float)-80);
+        			SudokuMain.correctEffect.setVolume((float)-80.0);
+        			SudokuMain.wrongEffect.setVolume((float)-80.0);
+        			Sounds.isMute = true;
+        		} else {
+        			SudokuMain.backgroundMusic.setVolume((float)sldrVolCtrl.getValue());
+        			SudokuMain.correctEffect.setVolume((float)sldrVolCtrl.getValue());
+        			SudokuMain.wrongEffect.setVolume((float)sldrVolCtrl.getValue());
+        			Sounds.isMute = false;
+        		}
+        	}
+        });
         volumeMute.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		SudokuMain.backgroundMusic.volumeMute();
         		SudokuMain.correctEffect.volumeMute();
         		SudokuMain.wrongEffect.volumeMute();
+        		sldrVolCtrl.setValue(sldrVolCtrl.getMinimum());
         	}
         });
         
@@ -139,6 +161,7 @@ public class MenuBar extends JMenuBar {
         		SudokuMain.backgroundMusic.setVolume((float)-25.0);
         		SudokuMain.correctEffect.setVolume((float)-25.0);
         		SudokuMain.wrongEffect.setVolume((float)-25.0);
+        		sldrVolCtrl.setValue(-25);
         	}
         });
         
@@ -147,14 +170,16 @@ public class MenuBar extends JMenuBar {
         		SudokuMain.backgroundMusic.setVolume((float)-10.0);
         		SudokuMain.correctEffect.setVolume((float)-10.0);
         		SudokuMain.wrongEffect.setVolume((float)-10.0);
+        		sldrVolCtrl.setValue(-10);
         	}
         });
         
-        volumeHigh.addActionListener(new ActionListener() {
+        volumeMax.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		SudokuMain.backgroundMusic.setVolume((float)6.0);
         		SudokuMain.correctEffect.setVolume((float)6.0);
         		SudokuMain.wrongEffect.setVolume((float)6.0);
+        		sldrVolCtrl.setValue(sldrVolCtrl.getMaximum());
         	}
         });
         
@@ -163,6 +188,7 @@ public class MenuBar extends JMenuBar {
         	public void actionPerformed(ActionEvent e) {
         		if(SudokuMain.currentBGM != "bgm1") {
         			SudokuMain.backgroundMusic.switchSong("Guitar-Gentle.wav");
+        			SudokuMain.backgroundMusic.setVolume(sldrVolCtrl.getValue());
         			SudokuMain.currentBGM = "bgm1";
         		}
         	}
@@ -172,6 +198,7 @@ public class MenuBar extends JMenuBar {
         	public void actionPerformed(ActionEvent e) {
         		if(SudokuMain.currentBGM != "bgm2") {
         			SudokuMain.backgroundMusic.switchSong("Neverland.wav");
+        			SudokuMain.backgroundMusic.setVolume(sldrVolCtrl.getValue());
         			SudokuMain.currentBGM = "bgm2";
         		}
         	}
@@ -181,12 +208,10 @@ public class MenuBar extends JMenuBar {
         	public void actionPerformed(ActionEvent e) {
         		if(SudokuMain.currentBGM != "bgm3") {
         			SudokuMain.backgroundMusic.switchSong("The-Beginning-w-Caturday.wav");
+        			SudokuMain.backgroundMusic.setVolume(sldrVolCtrl.getValue());
         			SudokuMain.currentBGM = "bgm3";
         		}
         	}
         });
     }
-
-
-    
 }

@@ -8,7 +8,7 @@ public class Sounds {
 	float prevVolume = 0; // Previous volume
 	float currVolume = 0; // Current Volume
 	FloatControl fc;
-	Boolean isMute = false;
+	static Boolean isMute = false;
 	
 	public Sounds(String soundFileName) {
 		try {
