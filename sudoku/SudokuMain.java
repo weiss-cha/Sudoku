@@ -1,7 +1,5 @@
 package sudoku;
-
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 /**
@@ -17,6 +15,7 @@ public class SudokuMain extends JFrame {
     public static Sounds correctEffect = new Sounds("correct-sound.wav");
     public static Sounds wrongEffect = new Sounds("wrong-sound.wav");
     public static String currentBGM = "bgm1";
+	
 	// Constructor
 	public SudokuMain() {
 
@@ -29,7 +28,6 @@ public class SudokuMain extends JFrame {
 
 		board.init(2);
 		backgroundMusic.loop();
-		//SoundsEnum.init(); //Pre-load all of the sound files
 		
 		pack(); // Pack the UI components, instead of setSize()
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Handle window closing

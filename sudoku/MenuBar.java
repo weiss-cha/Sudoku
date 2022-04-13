@@ -1,5 +1,4 @@
 package sudoku;
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent; // For JSlider
@@ -11,11 +10,10 @@ public class MenuBar extends JMenuBar {
     public MenuBar(GameBoard board) {
         super();
 
-        JMenu file = new JMenu("File");
-        JMenu options = new JMenu("Options");
-        JMenu help = new JMenu("Help");
+        JMenu fileMenu = new JMenu("File");
+        JMenu optionsMenu = new JMenu("Options");
         JMenu volumeMenu = new JMenu("Volume");
-        JMenu changeBGM = new JMenu("Change Music");
+        JMenu bgmMenu = new JMenu("Change Music");
 
         JMenuItem newGame = new JMenuItem("New Game");
         JMenuItem resetGame = new JMenuItem("Reset Game");
@@ -30,33 +28,66 @@ public class MenuBar extends JMenuBar {
         JMenuItem bgm2 = new JMenuItem("Music 2");
         JMenuItem bgm3 = new JMenuItem("Music 3");
         
-        // Add MenuItem to Menu
-        file.add(newGame);
-        file.add(resetGame);
-        file.add(exitGame);
+        // Add MenuItem to fileMenu
+        fileMenu.add(newGame);
+        fileMenu.add(resetGame);
+        fileMenu.add(exitGame);
         
         // Add volume submenus settings
         volumeMenu.add(volumeMute); 
         volumeMenu.add(volumeLow); 
         volumeMenu.add(volumeMedium); 
         volumeMenu.add(volumeMax);
-        // Add Volume into Options
-        options.add(volumeMenu);
+        // Add Volume into optionsMenu
+        optionsMenu.add(volumeMenu);
+
         
         // Add change music submenus
-        changeBGM.add(bgm1);
-        changeBGM.add(bgm2);
-        changeBGM.add(bgm3);
-        //Add Change Music into Options
-        options.add(changeBGM);
+        bgmMenu.add(bgm1);
+        bgmMenu.add(bgm2);
+        bgmMenu.add(bgm3);
+
+        //Add Change Music into optionsMenu
+        optionsMenu.add(bgmMenu);
         
         // Add Menu to MenuBar
-        this.add(file);
-        this.add(options);
-        this.add(help);
+        this.add(fileMenu);
+        this.add(optionsMenu);
+
+        // Set Mnemonic (i.e. Alt)
+        fileMenu.setMnemonic(KeyEvent.VK_F);
+        newGame.setMnemonic(KeyEvent.VK_N);
+        resetGame.setMnemonic(KeyEvent.VK_R);
+        exitGame.setMnemonic(KeyEvent.VK_E);
+
+        optionsMenu.setMnemonic(KeyEvent.VK_O);
+        volumeMenu.setMnemonic(KeyEvent.VK_V);
+        bgmMenu.setMnemonic(KeyEvent.VK_C);
+        
+        volumeMute.setMnemonic(KeyEvent.VK_U);
+        volumeLow.setMnemonic(KeyEvent.VK_L);
+        volumeMedium.setMnemonic(KeyEvent.VK_M);
+        volumeHigh.setMnemonic(KeyEvent.VK_H);
+
+        bgm1.setMnemonic(KeyEvent.VK_M);
+        bgm2.setMnemonic(KeyEvent.VK_U);
+        bgm3.setMnemonic(KeyEvent.VK_S);
+
+        // Set Accelerator (i.e. Ctrl)
+        newGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+        resetGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
+        exitGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
+        
+        volumeMute.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, KeyEvent.CTRL_DOWN_MASK));
+        volumeLow.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_J, KeyEvent.CTRL_DOWN_MASK));
+        volumeMedium.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K, KeyEvent.CTRL_DOWN_MASK));
+        volumeHigh.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK));
+
+        bgm1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, KeyEvent.CTRL_DOWN_MASK));
+        bgm2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
+        bgm3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK));
 
         // Add Listener to MenuItem
-
         // New Game
         newGame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
